@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -43,8 +44,9 @@ public class InvoiceIn
     private String productName;
 
     @NotNull(message = "Invalid \"Unit Of Measure\". It can't be null.")
-    @Enumerated(EnumType.STRING)
-    private UnitOfMeasureType unitOfMeasure;
+    @NotBlank(message = "Invalid \"Unit Of Measure\". It can't be empty.")
+    @Pattern(regexp="^[A-Za-z]*$", message = "Invalid \"Unit Of Measure\". Wrong format!")
+    private String unitOfMeasure;
 
     @NotNull(message = "Invalid \"Quantity\". It can't be null.")
     @Positive(message = "Invalid \"Quantity\". It must be positive.")
@@ -59,7 +61,11 @@ public class InvoiceIn
     @NotNull(message = "Invalid \"Value With TVA\". It can't be null.")
     private double valueWithTva;
 
-    public enum UnitOfMeasureType {
-        BUC, ST, L, KG
-    }
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "invoiceIn_provider",
+            joinColumns = @JoinColumn(name = "id_invoiceIn"),
+            inverseJoinColumns = @JoinColumn(name = "id_provider")
+    )
+    public Provider provider;
 }

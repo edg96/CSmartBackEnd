@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -37,4 +38,12 @@ public class Provider
             inverseJoinColumns = @JoinColumn(name = "id_address")
     )
     public Address address;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "provider_invoiceIn",
+            joinColumns = @JoinColumn(name = "id_provider"),
+            inverseJoinColumns = @JoinColumn(name = "id_invoiceIn")
+    )
+    public Set<InvoiceIn> invoiceIns;
 }

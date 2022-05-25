@@ -46,8 +46,7 @@ public class InvoiceOut
     @NotNull(message = "Invalid \"Unit Of Measure\". It can't be null.")
     @NotBlank(message = "Invalid \"Unit Of Measure\". It can't be empty.")
     @Pattern(regexp="^[A-Za-z]*$", message = "Invalid \"Unit Of Measure\". Wrong format!")
-    @Enumerated(EnumType.STRING)
-    private UnitOfMeasureType unitOfMeasure;
+    private String unitOfMeasure;
 
     @NotNull(message = "Invalid \"Quantity\". It can't be null.")
     @NotBlank(message = "Invalid \"Quantity\". It can't be empty.")

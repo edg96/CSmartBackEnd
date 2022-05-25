@@ -1,6 +1,5 @@
 package com.csmartbackend.dto;
 
-import com.csmartbackend.model.InvoiceIn.UnitOfMeasureType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,7 @@ public class InvoiceInDto
     private String dateDto;
     private int articleNumberDto;
     private String productNameDto;
-    private UnitOfMeasureType unitOfMeasureDto;
+    private String unitOfMeasureDto;
     private int quantityDto;
     private double unitaryPriceDto;
     private double valueWithoutTvaDto;

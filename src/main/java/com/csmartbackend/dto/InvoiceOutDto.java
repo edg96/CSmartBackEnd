@@ -17,7 +17,7 @@ public class InvoiceOutDto
     private String dateDto;
     private int articleNumberDto;
     private String productNameDto;
-    private UnitOfMeasureType unitOfMeasureDto;
+    private String unitOfMeasureDto;
     private int quantityDto;
     private double unitaryPriceDto;
     private double valueWithoutTvaDto;

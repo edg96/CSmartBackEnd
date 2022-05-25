@@ -50,5 +50,4 @@ public class Company
             inverseJoinColumns = @JoinColumn(name = "id_workingpoint")
     )
     public Set<WorkingPoint> workingPoints;
-    //transfera angajatii catre alte puncte de lucru sau elimina
 }

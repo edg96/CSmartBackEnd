@@ -44,5 +44,4 @@ public class WorkingPoint
             inverseJoinColumns = @JoinColumn(name = "id_employee")
     )
     public Set<Employee> employees;
-    // TODO: 22/04/2022 Transfera angajatii catre alte puncte de lucru sau elimina 
 }
