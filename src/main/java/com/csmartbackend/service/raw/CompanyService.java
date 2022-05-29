@@ -3,12 +3,14 @@ package com.csmartbackend.service.raw;
 import com.csmartbackend.dto.CompanyDto;
 import com.csmartbackend.mapper.CompanyMapper;
 import com.csmartbackend.model.Company;
+import com.csmartbackend.model.Employee;
 import com.csmartbackend.repository.CompanyRepository;
 import com.exception.general.TargetNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -20,24 +22,16 @@ public class CompanyService
 {
     private final CompanyRepository companyRepository;
 
-    public List<CompanyDto> findAll()
+    public List<Company> findAll()
     {
         List<Company> companyList = companyRepository.findAll();
-        if(companyList.isEmpty() || companyList == null)
-            throw new TargetNotFoundException();
+        if(companyList.isEmpty())
+            throw new TargetNotFoundException("The list of companies is empty.");
 
-        CompanyMapper companyMapper = CompanyMapper.getInstance();
-        return companyList.stream()
-                .map(companyMapper::entityToDto)
-                .collect(Collectors.toList());
+        return new ArrayList<>(companyList);
     }
 
-    public CompanyDto save(Company company)
-    {
-        companyRepository.save(company);
-
-        return CompanyMapper.getInstance().entityToDto(company);
-    }
+    public Company save(Company company) { return companyRepository.save(company); }
 
     public void deleteAll() throws TargetNotFoundException { companyRepository.deleteAll(); }
 

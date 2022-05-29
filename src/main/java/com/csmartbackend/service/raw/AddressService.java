@@ -1,20 +1,16 @@
 package com.csmartbackend.service.raw;
 
-
-import com.csmartbackend.dto.AddressDto;
-import com.csmartbackend.mapper.AddressMapper;
 import com.csmartbackend.model.Address;
-
 import com.csmartbackend.repository.AddressRepository;
-import com.exception.general.TargetAlreadyExistsException;
 import com.exception.general.TargetNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,38 +19,39 @@ public class AddressService
 {
     private final AddressRepository addressRepository;
 
-    public List<AddressDto> findAll()
+    public List<Address> findAll()
     {
         List<Address> addressList = addressRepository.findAll();
-        if(addressList.isEmpty() || addressList == null)
-            throw new TargetNotFoundException();
+        if(addressList.isEmpty())
+            throw new TargetNotFoundException("The list of addresses is empty.");
 
-        AddressMapper addressMapper = AddressMapper.getInstance();
-        return addressList.stream()
-                .map(addressMapper::entityToDto)
-                .collect(Collectors.toList());
+        return new ArrayList<>(addressList);
     }
 
-    public AddressDto save(Address address)
+    public Address findById(UUID addressId) throws TargetNotFoundException
     {
-        /// TODO: 27/04/2022 Rezolva problema. Adresa iti vine din employee
-        if(addressRepository.existsById(address.getAddressId()))
-        {
-            throw new TargetAlreadyExistsException("Adress with the id " + address.getAddressId() + " already exist.");
-        }
+        Optional<Address> addressOptional = addressRepository.findById(addressId);
+        if(addressOptional.isEmpty())
+            throw new TargetNotFoundException("No address with the specified ID was found in the database.");
 
-        addressRepository.save(address);
-
-        return AddressMapper.getInstance().entityToDto(address);
+        return addressOptional.get();
     }
 
-    public void deleteById(UUID id)
+    public Address save(Address address)
     {
-        if(!addressRepository.existsById(id))
-        {
-            throw new TargetAlreadyExistsException("Adress with the id " + id + " already exist.");
-        }
-
-        addressRepository.deleteById(id);
+        return addressRepository.save(address);
     }
+
+    public Address update(UUID addressId, Address address)
+    {
+        Address extractedAddress = addressRepository.getById(addressId);
+        extractedAddress = address;
+        return addressRepository.save(extractedAddress);
+    }
+
+    public void deleteAll() throws TargetNotFoundException { addressRepository.deleteAll(); }
+
+    public void deleteSingle(Address address) throws TargetNotFoundException { addressRepository.deleteById(address.getAddressId()); }
+
+    public void deleteById(UUID id) throws TargetNotFoundException { addressRepository.deleteById(id); }
 }

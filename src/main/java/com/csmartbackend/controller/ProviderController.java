@@ -19,27 +19,39 @@ public class ProviderController
     private final ProviderService providerService;
 
     @GetMapping("find/all")
-    public List<Provider> findAll() { return providerService.findAll(); }
-
-    @GetMapping("findbyid/{id}")
-    public ResponseEntity<Provider> findById(@PathVariable("id") UUID id)
+    public ResponseEntity<List<Provider>> findAll()
     {
-        Provider provider = providerService.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(provider);
+        List<Provider> listOfProviders = providerService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfProviders);
+    }
+
+    @GetMapping("findbyid/{providerId}")
+    public ResponseEntity<Provider> findById(@PathVariable("providerId") UUID providerId)
+    {
+        Provider returnedProvider = providerService.findById(providerId);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedProvider);
     }
 
     @PostMapping("save")
-    public void saveProvider(@RequestBody Provider provider) { providerService.save(provider); }
+    public ResponseEntity<Provider> save(@RequestBody @Valid Provider provider)
+    {
+        Provider returnedProvider = providerService.save(provider);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedProvider);
+    }
 
     @PutMapping("update/{providerId}")
-    public void updateProvider(@PathVariable("providerId") UUID providerId, @RequestBody @Valid Provider provider) { providerService.update(providerId, provider); }
+    public ResponseEntity<Provider> update(@PathVariable("providerId") UUID providerId, @RequestBody @Valid Provider provider)
+    {
+        Provider returnedProvider = providerService.update(providerId, provider);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedProvider);
+    }
 
     @DeleteMapping("delete/all")
     public void deleteAll() { providerService.deleteAll(); }
 
-    @DeleteMapping("delete/single")
-    public void deleteSingleEmployee(@RequestBody @Valid Provider provider) { providerService.deleteSingle(provider); }
-
     @DeleteMapping("delete/{id}")
-    public void deleteEmployeeById(@PathVariable("id") UUID id) { providerService.deleteById(id); }
+    public void deleteById(@PathVariable("id") UUID id) { providerService.deleteById(id); }
+
+    @DeleteMapping("delete/single")
+    public void deleteSingle(@RequestBody @Valid Provider provider) { providerService.deleteSingle(provider); }
 }

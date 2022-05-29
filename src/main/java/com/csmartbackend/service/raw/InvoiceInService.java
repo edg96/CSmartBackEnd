@@ -23,7 +23,7 @@ public class InvoiceInService
     {
         List<InvoiceIn> invoiceInList = invoiceInRepository.findAll();
         if(invoiceInList.isEmpty())
-            throw new TargetNotFoundException("The list of invoices is empty.");
+            throw new TargetNotFoundException("The list of invoices in is empty.");
 
         return new ArrayList<>(invoiceInList);
     }
@@ -32,7 +32,7 @@ public class InvoiceInService
     {
         Optional<InvoiceIn> invoiceInOptional = invoiceInRepository.findById(invoiceInId);
         if(invoiceInOptional.isEmpty())
-            throw new TargetNotFoundException("No invoice with the specified ID was found in the databse.");
+            throw new TargetNotFoundException("No invoice in with the specified ID was found in the database.");
 
         return invoiceInOptional.get();
     }
@@ -51,10 +51,7 @@ public class InvoiceInService
 
     public void deleteAll() throws TargetNotFoundException { invoiceInRepository.deleteAll(); }
 
-    public void deleteSingle(InvoiceIn invoiceIn) throws TargetNotFoundException
-    {
-        invoiceInRepository.deleteById(invoiceIn.getInvoiceInId());
-    }
+    public void deleteSingle(InvoiceIn invoiceIn) throws TargetNotFoundException { invoiceInRepository.deleteById(invoiceIn.getInvoiceInId()); }
 
     public void deleteById(UUID id) throws TargetNotFoundException { invoiceInRepository.deleteById(id); }
 }

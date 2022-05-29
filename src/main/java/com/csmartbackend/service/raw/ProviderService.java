@@ -37,24 +37,21 @@ public class ProviderService
         return providerOptional.get();
     }
 
-    public void save(Provider provider)
+    public Provider save(Provider provider)
     {
-        providerRepository.save(provider);
+        return providerRepository.save(provider);
     }
 
-    public void update(UUID providerId, Provider provider)
+    public Provider update(UUID providerId, Provider provider)
     {
         Provider extractedProvider = providerRepository.getById(providerId);
         extractedProvider = provider;
-        providerRepository.save(extractedProvider);
+        return providerRepository.save(extractedProvider);
     }
+
+    public void deleteAll() throws TargetNotFoundException { providerRepository.deleteAll(); }
+
+    public void deleteSingle(Provider provider) throws TargetNotFoundException { providerRepository.deleteById(provider.getProviderId()); }
 
     public void deleteById(UUID id) throws TargetNotFoundException { providerRepository.deleteById(id); }
-
-
-    public void deleteAll() {
-    }
-
-    public void deleteSingle(Provider provider) {
-    }
 }

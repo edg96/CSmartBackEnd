@@ -1,6 +1,5 @@
 package com.csmartbackend.controller;
 
-import com.csmartbackend.dto.AddressDto;
 import com.csmartbackend.model.Address;
 import com.csmartbackend.service.raw.AddressService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("address")
@@ -19,13 +19,39 @@ public class AddressController
     private final AddressService addressService;
 
     @GetMapping("find/all")
-    public ResponseEntity<List<AddressDto>> findAll()
+    public ResponseEntity<List<Address>> findAll()
     {
-        List<AddressDto> AddressList = addressService.findAll();
+        List<Address> listOfAddresss = addressService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfAddresss);
+    }
 
-        return ResponseEntity.status(HttpStatus.OK).body(AddressList);
+    @GetMapping("findbyid/{addressId}")
+    public ResponseEntity<Address> findById(@PathVariable("addressId") UUID addressId)
+    {
+        Address returnedAddress = addressService.findById(addressId);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedAddress);
     }
 
     @PostMapping("save")
-    public AddressDto update(@RequestBody @Valid Address address) { return addressService.save(address); }
+    public ResponseEntity<Address> save(@RequestBody @Valid Address address)
+    {
+        Address returnedAddress = addressService.save(address);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedAddress);
+    }
+
+    @PutMapping("update/{addressId}")
+    public ResponseEntity<Address> update(@PathVariable("addressId") UUID addressId, @RequestBody @Valid Address address)
+    {
+        Address returnedAddress = addressService.update(addressId, address);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedAddress);
+    }
+
+    @DeleteMapping("delete/all")
+    public void deleteAll() { addressService.deleteAll(); }
+
+    @DeleteMapping("delete/{id}")
+    public void deleteById(@PathVariable("id") UUID id) { addressService.deleteById(id); }
+
+    @DeleteMapping("delete/single")
+    public void deleteSingle(@RequestBody @Valid Address address) { addressService.deleteSingle(address); }
 }

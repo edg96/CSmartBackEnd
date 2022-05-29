@@ -21,22 +21,22 @@ public class EmployeeController
     @GetMapping("find/all")
     public ResponseEntity<List<Employee>> findAll()
     {
-        List<Employee> listEmployeeDto = employeeService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(listEmployeeDto);
+        List<Employee> listOfEmployees = employeeService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfEmployees);
     }
 
     @GetMapping("findbyid/{employeeId}")
     public ResponseEntity<Employee> findById(@PathVariable("employeeId") UUID employeeId)
     {
-        Employee employee = employeeService.findById(employeeId);
-        return ResponseEntity.status(HttpStatus.OK).body(employee);
+        Employee returnedEmployee = employeeService.findById(employeeId);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedEmployee);
     }
 
     @GetMapping("findbycnp/{cnp}")
     public ResponseEntity<Employee> findByCNP(@PathVariable("cnp") String Cnp)
     {
-        Employee employee = employeeService.findByCnp(Cnp);
-        return ResponseEntity.status(HttpStatus.OK).body(employee);
+        Employee returnedEmployee = employeeService.findByCnp(Cnp);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedEmployee);
     }
 
     @PostMapping("save")

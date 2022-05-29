@@ -1,7 +1,5 @@
 package com.csmartbackend.service.raw;
 
-import com.csmartbackend.dto.WorkingPointDto;
-import com.csmartbackend.mapper.WorkingPointMapper;
 import com.csmartbackend.model.WorkingPoint;
 import com.csmartbackend.repository.WorkingPointRepository;
 import com.exception.general.TargetNotFoundException;
@@ -9,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,29 +19,40 @@ public class WorkingPointService
 {
     private final WorkingPointRepository workingPointRepository;
 
-    public List<WorkingPointDto> findAll()
+    public List<WorkingPoint> findAll()
     {
         List<WorkingPoint> workingPointList = workingPointRepository.findAll();
         if(workingPointList.isEmpty())
-            throw new TargetNotFoundException();
+            throw new TargetNotFoundException("The list of working points is empty.");
 
-        WorkingPointMapper workingPointMapper = WorkingPointMapper.getInstance();
-        return workingPointList.stream()
-                .map(workingPointMapper::entityToDto)
-                .collect(Collectors.toList());
+        return new ArrayList<>(workingPointList);
     }
 
-    public WorkingPointDto save(WorkingPoint workingPoint)
+    public WorkingPoint findById(UUID workingPointId) throws TargetNotFoundException
     {
-        workingPointRepository.save(workingPoint);
+        Optional<WorkingPoint> workingPointOptional = workingPointRepository.findById(workingPointId);
+        if(workingPointOptional.isEmpty())
+            throw new TargetNotFoundException("No working point with the specified ID was found in the database.");
 
-        return WorkingPointMapper.getInstance().entityToDto(workingPoint);
+        return workingPointOptional.get();
     }
 
-    public void deleteAll() { workingPointRepository.deleteAll(); }
+    public WorkingPoint save(WorkingPoint workingPoint)
+    {
+        return workingPointRepository.save(workingPoint);
+    }
 
-    public void deleteById(UUID id) { workingPointRepository.deleteById(id); }
+    public WorkingPoint update(UUID workingPointId, WorkingPoint workingPoint)
+    {
+        WorkingPoint extractedWorkingPoint = workingPointRepository.getById(workingPointId);
+        extractedWorkingPoint = workingPoint;
+        return workingPointRepository.save(extractedWorkingPoint);
+    }
 
-    public void deleteSingle(WorkingPoint workingPoint) { workingPointRepository.delete(workingPoint); }
+    public void deleteAll() throws TargetNotFoundException { workingPointRepository.deleteAll(); }
+
+    public void deleteSingle(WorkingPoint workingPoint) throws TargetNotFoundException { workingPointRepository.deleteById(workingPoint.getWorkingPointId()); }
+
+    public void deleteById(UUID id) throws TargetNotFoundException { workingPointRepository.deleteById(id); }
 }
 

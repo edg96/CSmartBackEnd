@@ -1,7 +1,5 @@
 package com.csmartbackend.service.raw;
 
-import com.csmartbackend.dto.ContractDto;
-import com.csmartbackend.mapper.ContractMapper;
 import com.csmartbackend.model.Contract;
 import com.csmartbackend.repository.ContractRepository;
 import com.exception.general.TargetNotFoundException;
@@ -9,9 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,23 +19,39 @@ public class ContractService
 {
     private final ContractRepository contractRepository;
 
-    public List<ContractDto> findAll()
+    public List<Contract> findAll()
     {
         List<Contract> contractList = contractRepository.findAll();
-        if(contractList.isEmpty() || contractList == null)
-            throw new TargetNotFoundException();
+        if(contractList.isEmpty())
+            throw new TargetNotFoundException("The list of contracts is empty.");
 
-        ContractMapper contractMapper = ContractMapper.getInstance();
-        return contractList.stream()
-                .map(contractMapper::entityToDto)
-                .collect(Collectors.toList());
+        return new ArrayList<>(contractList);
     }
 
-    public ContractDto save(Contract contract)
+    public Contract findById(UUID contractId) throws TargetNotFoundException
     {
-        contractRepository.save(contract);
-        return ContractMapper.getInstance().entityToDto(contract);
+        Optional<Contract> contractOptional = contractRepository.findById(contractId);
+        if(contractOptional.isEmpty())
+            throw new TargetNotFoundException("No contract with the specified ID was found in the database.");
+
+        return contractOptional.get();
     }
 
-    public void deleteById(UUID id) { contractRepository.deleteById(id); }
+    public Contract save(Contract contract)
+    {
+        return contractRepository.save(contract);
+    }
+
+    public Contract update(UUID contractId, Contract contract)
+    {
+        Contract extractedContract = contractRepository.getById(contractId);
+        extractedContract = contract;
+        return contractRepository.save(extractedContract);
+    }
+
+    public void deleteAll() throws TargetNotFoundException { contractRepository.deleteAll(); }
+
+    public void deleteSingle(Contract contract) throws TargetNotFoundException { contractRepository.deleteById(contract.getContractId()); }
+
+    public void deleteById(UUID id) throws TargetNotFoundException { contractRepository.deleteById(id); }
 }

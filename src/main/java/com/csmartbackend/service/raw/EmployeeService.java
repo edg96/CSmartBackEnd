@@ -36,7 +36,7 @@ public class EmployeeService implements EmployeeServiceImpl
     {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeId);
         if(employeeOptional.isEmpty())
-            throw new TargetNotFoundException("No employee with the specified ID was found in the databse.");
+            throw new TargetNotFoundException("No employee with the specified ID was found in the database.");
 
         return employeeOptional.get();
     }
@@ -45,7 +45,7 @@ public class EmployeeService implements EmployeeServiceImpl
     {
         Optional<Employee> employeeOptional = employeeRepository.findByCnp(Cnp);
         if(employeeOptional.isEmpty())
-            throw new CNPNotFoundException("No employee with the specified CNP was found in the databse.");
+            throw new CNPNotFoundException("No employee with the specified CNP was found in the database.");
 
         return employeeOptional.get();
     }

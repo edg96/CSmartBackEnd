@@ -21,15 +21,15 @@ public class InvoiceInController
     @GetMapping("find/all")
     public ResponseEntity<List<InvoiceIn>> findAll()
     {
-        List<InvoiceIn> invoiceInList = invoiceInService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(invoiceInList);
+        List<InvoiceIn> listOfInvoiceIns = invoiceInService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfInvoiceIns);
     }
 
     @GetMapping("findbyid/{invoiceInId}")
     public ResponseEntity<InvoiceIn> findById(@PathVariable("invoiceInId") UUID invoiceInId)
     {
-        InvoiceIn invoiceIn = invoiceInService.findById(invoiceInId);
-        return ResponseEntity.status(HttpStatus.OK).body(invoiceIn);
+        InvoiceIn returnedInvoiceIn = invoiceInService.findById(invoiceInId);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedInvoiceIn);
     }
 
     @PostMapping("save")
@@ -39,9 +39,19 @@ public class InvoiceInController
         return ResponseEntity.status(HttpStatus.OK).body(returnedInvoiceIn);
     }
 
+    @PutMapping("update/{invoiceInId}")
+    public ResponseEntity<InvoiceIn> update(@PathVariable("invoiceInId") UUID invoiceInId, @RequestBody @Valid InvoiceIn invoiceIn)
+    {
+        InvoiceIn returnedInvoiceIn = invoiceInService.update(invoiceInId, invoiceIn);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedInvoiceIn);
+    }
+
     @DeleteMapping("delete/all")
     public void deleteAll() { invoiceInService.deleteAll(); }
 
-    @DeleteMapping("delete/{invoiceInId}")
-    public void deleteInvoiceInById(@PathVariable("invoiceInId") UUID invoiceInId) { invoiceInService.deleteById(invoiceInId); }
+    @DeleteMapping("delete/{id}")
+    public void deleteById(@PathVariable("id") UUID id) { invoiceInService.deleteById(id); }
+
+    @DeleteMapping("delete/single")
+    public void deleteSingle(@RequestBody @Valid InvoiceIn invoiceIn) { invoiceInService.deleteSingle(invoiceIn); }
 }

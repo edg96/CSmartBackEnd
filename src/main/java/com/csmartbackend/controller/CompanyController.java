@@ -1,9 +1,12 @@
 package com.csmartbackend.controller;
 
 import com.csmartbackend.dto.CompanyDto;
+import com.csmartbackend.model.Employee;
 import com.csmartbackend.service.raw.CompanyService;
 import com.csmartbackend.model.Company;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,10 +21,18 @@ public class CompanyController
     private final CompanyService companyService;
 
     @GetMapping("find/all")
-    public List<CompanyDto> findAll() { return companyService.findAll(); }
+    public ResponseEntity<List<Company>> findAll()
+    {
+        List<Company> listOfCompanies = companyService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(listOfCompanies);
+    }
 
     @PostMapping("save")
-    public CompanyDto update(@RequestBody @Valid Company company) { return companyService.save(company); }
+    public ResponseEntity<Company> update(@RequestBody @Valid Company company)
+    {
+        Company returnedCompany = companyService.save(company);
+        return ResponseEntity.status(HttpStatus.OK).body(returnedCompany);
+    }
 
     @DeleteMapping("delete/all")
     public void deleteAll() { companyService.deleteAll(); }
