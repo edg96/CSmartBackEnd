@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("invoicein")
+@RequestMapping("invoiceIn")
 @RequiredArgsConstructor
 public class InvoiceInController
 {

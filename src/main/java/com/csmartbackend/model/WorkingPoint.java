@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@Table(name = "workingpoint")
+@Table(name = "workingPoint")
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkingPoint
