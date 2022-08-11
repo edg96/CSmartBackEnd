@@ -8,6 +8,6 @@ public class CSmartBackEndApplication
 {
     public static void main(String[] args)
     {
-        SpringApplication.run(CSmartBackEndApplication.class, args);
+        SpringApplication.run(CSmartBackEndApplication.class, args);;
     }
 }
