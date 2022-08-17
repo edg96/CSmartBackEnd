@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("workingPoint")
+@RequestMapping("workingpoint")
 @RequiredArgsConstructor
 public class WorkingPointController
 {
