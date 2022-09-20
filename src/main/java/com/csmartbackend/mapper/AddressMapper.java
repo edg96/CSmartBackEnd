@@ -1,6 +1,6 @@
 package com.csmartbackend.mapper;
 
-import com.csmartbackend.dto.AddressDto;
+import com.csmartbackend.mapper.dto.AddressDto;
 import com.csmartbackend.model.Address;
 import com.exception.mapper.DtoToEntityFailedTransformationException;
 import com.exception.mapper.EntityToDtoFailedTransformationException;

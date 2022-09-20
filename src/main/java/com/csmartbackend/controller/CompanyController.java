@@ -1,7 +1,5 @@
 package com.csmartbackend.controller;
 
-import com.csmartbackend.dto.CompanyDto;
-import com.csmartbackend.model.Employee;
 import com.csmartbackend.service.raw.CompanyService;
 import com.csmartbackend.model.Company;
 import lombok.RequiredArgsConstructor;

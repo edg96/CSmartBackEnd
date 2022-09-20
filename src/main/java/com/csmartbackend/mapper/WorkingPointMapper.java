@@ -1,6 +1,6 @@
 package com.csmartbackend.mapper;
 
-import com.csmartbackend.dto.WorkingPointDto;
+import com.csmartbackend.mapper.dto.WorkingPointDto;
 import com.csmartbackend.model.WorkingPoint;
 import com.exception.mapper.DtoToEntityFailedTransformationException;
 import com.exception.mapper.EntityToDtoFailedTransformationException;

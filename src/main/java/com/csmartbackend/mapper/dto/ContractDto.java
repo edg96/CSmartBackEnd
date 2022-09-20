@@ -1,4 +1,4 @@
-package com.csmartbackend.dto;
+package com.csmartbackend.mapper.dto;
 
 import com.csmartbackend.model.Contract.ContractType;
 import lombok.Builder;

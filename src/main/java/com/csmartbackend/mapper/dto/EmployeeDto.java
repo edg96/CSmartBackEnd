@@ -1,4 +1,4 @@
-package com.csmartbackend.dto;
+package com.csmartbackend.mapper.dto;
 
 import lombok.Builder;
 import lombok.Getter;

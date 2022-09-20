@@ -1,7 +1,7 @@
 package com.csmartbackend.mapper;
 
 import com.csmartbackend.model.InvoiceIn;
-import com.csmartbackend.dto.InvoiceInDto;
+import com.csmartbackend.mapper.dto.InvoiceInDto;
 import com.exception.mapper.DtoToEntityFailedTransformationException;
 import com.exception.mapper.EntityToDtoFailedTransformationException;
 

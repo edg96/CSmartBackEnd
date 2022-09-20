@@ -1,4 +1,4 @@
-package com.csmartbackend.dto;
+package com.csmartbackend.mapper.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,10 +10,11 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-public class WorkingPointDto
+public class CompanyDto
 {
-    private UUID workingPointIdDto;
+    private UUID companyIdDto;
+    private String registerNumberDto;
     private String fiscalCodeDto;
     public AddressDto addressDto;
-    public Set<EmployeeDto> employeesDto;
+    public Set<WorkingPointDto> workingPointsDto;
 }

@@ -1,6 +1,6 @@
 package com.csmartbackend.mapper;
 
-import com.csmartbackend.dto.ContractDto;
+import com.csmartbackend.mapper.dto.ContractDto;
 import com.csmartbackend.model.Contract;
 import com.exception.mapper.DtoToEntityFailedTransformationException;
 import com.exception.mapper.EntityToDtoFailedTransformationException;

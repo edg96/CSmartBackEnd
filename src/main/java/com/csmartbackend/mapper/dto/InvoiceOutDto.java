@@ -1,5 +1,6 @@
-package com.csmartbackend.dto;
+package com.csmartbackend.mapper.dto;
 
+import com.csmartbackend.model.InvoiceOut.UnitOfMeasureType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +10,9 @@ import java.util.UUID;
 @Builder
 @Setter
 @Getter
-public class InvoiceInDto
+public class InvoiceOutDto
 {
-    private UUID invoiceInIdDto;
+    private UUID invoiceOutDto;
     private String codeDto;
     private String dateDto;
     private int articleNumberDto;
