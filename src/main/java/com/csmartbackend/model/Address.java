@@ -13,7 +13,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@Table(name = "addresses")
+@Table(name = "address")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address
