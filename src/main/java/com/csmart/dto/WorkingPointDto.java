@@ -1,17 +1,19 @@
-package com.csmart.mapper.dto;
+package com.csmart.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Builder
-@Setter
 @Getter
-public class ProviderDto
+@Setter
+public class WorkingPointDto
 {
-    private UUID providerIdDto;
+    private UUID workingPointIdDto;
     private String fiscalCodeDto;
     public AddressDto addressDto;
+    public Set<EmployeeDto> employeesDto;
 }

@@ -35,8 +35,4 @@ public class Contract
     @NotNull(message = "Invalid \"Brut Salary\". It can't be null.")
     @Positive(message = "Invalid \"Brut Salary\". It must be positive.")
     private double brutSalary;
-
-    public enum ContractType {
-        FULLTIME, PARTTIME, ZILIER
-    }
 }
